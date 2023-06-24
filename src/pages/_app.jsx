@@ -31,13 +31,6 @@ const ethereumClient = new EthereumClient(wagmiConfig, chains)
 export default function App({ Component, pageProps }) {
   const [ready, setReady] = useState(false)
 
-  const themeVariables =
-    window.screen.width < 768
-      ? {
-          '--w3m-accent-color': '#FFFFFF',
-        }
-      : { '--w3m-accent-color': '#000000' }
-
   useEffect(() => {
     setReady(true)
   }, [])
@@ -63,8 +56,8 @@ export default function App({ Component, pageProps }) {
         ethereumClient={ethereumClient}
         themeVariables={{
           '--w3m-color-overlay': 'rgb(255 255 255 / 45%)',
+          '--w3m-accent-color': '#000000',
           '--w3m-background-color': '#000000',
-          ...themeVariables,
         }}
       />
     </>
