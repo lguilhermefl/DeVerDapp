@@ -7,32 +7,78 @@ export default function Menu() {
   const [muted, setMuted] = useState(false)
   const toggleMuted = () => setMuted(!muted)
 
+  const url = 'https://dl.sndup.net/jkv6/Always-Pass-It-On.ogg'
+
+  const [audio] = useState(new Audio(url))
+  const [playing, setPlaying] = useState(false)
+
+  const toggle = () => setPlaying(!playing)
+
+  useEffect(() => {
+    playing ? audio.play() : audio.pause()
+  }, [playing])
+
+  useEffect(() => {
+    audio.addEventListener('ended', () => setPlaying(false))
+    setTimeout(() => setPlaying(true), 4000)
+    return () => {
+      audio.removeEventListener('ended', () => setPlaying(false))
+    }
+  }, [])
+
   return (
-    <Header>
-      <Logo src="./new_logo.png" />
-      <Nav>
-        <audio muted={muted} autoPlay={true} loop className="mysong">
-          <source
-            src="https://dl.sndup.net/jkv6/Always-Pass-It-On.ogg"
-            type="audio/ogg"
-          />
-          <source
-            src="https://dl.sndup.net/nfsb/Always-Pass-It-On.mp3"
-            type="audio/mpeg"
-          />
-        </audio>
-        <ImageIcon
-          onClick={toggleMuted}
-          alt="mute/sound"
-          src={muted ? './mute.png' : './sound.png'}
-        />
+    <>
+      <Header>
+        <Logo src="./new_logo.png" />
+        <Nav>
+          <AudioButton onClick={toggle}>
+            {playing ? (
+              <img alt="pause" src="./pause.png" />
+            ) : (
+              <img alt="play" src="./play.png" />
+            )}
+          </AudioButton>
+
+          <SocialAnchor
+            href="https://opensea.io/collection/radialartcollection"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <ImageIcon alt="Opensea" src="./opensea.png" />
+          </SocialAnchor>
+
+          <SocialAnchor
+            href="https://etherscan.io/address/0x37e0de5361b42c85a4c4bcd44b0325abbab37e66#writeContract"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <ImageIcon alt="Etherscan" src="./etherscan.png" />
+          </SocialAnchor>
+
+          <SocialAnchor
+            href="https://twitter.com/VincentDeVerNFT"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <ImageIcon alt="Twitter" src="./twitter.png" />
+          </SocialAnchor>
+        </Nav>
+      </Header>
+      <NavMobile>
+        <AudioButton onClick={toggle}>
+          {playing ? (
+            <img alt="pause" src="./pause-w.png" />
+          ) : (
+            <img alt="play" src="./play-w.png" />
+          )}
+        </AudioButton>
 
         <SocialAnchor
           href="https://opensea.io/collection/radialartcollection"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <ImageIcon alt="Opensea" src="./opensea.png" />
+          <ImageIcon alt="Opensea" src="./opensea-w.png" />
         </SocialAnchor>
 
         <SocialAnchor
@@ -40,7 +86,7 @@ export default function Menu() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <ImageIcon alt="Etherscan" src="./etherscan.png" />
+          <ImageIcon alt="Etherscan" src="./etherscan-w.png" />
         </SocialAnchor>
 
         <SocialAnchor
@@ -48,10 +94,10 @@ export default function Menu() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <ImageIcon alt="Twitter" src="./twitter.png" />
+          <ImageIcon alt="Twitter" src="./twitter-w.png" />
         </SocialAnchor>
-      </Nav>
-    </Header>
+      </NavMobile>
+    </>
   )
 }
 
@@ -59,10 +105,13 @@ const Header = styled.div`
   background-color: white;
   height: 80px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 0 2rem;
   width: 100%;
+  @media (min-width: 500px) {
+    justify-content: space-between;
+  }
 `
 
 const Logo = styled.img`
@@ -71,11 +120,40 @@ const Logo = styled.img`
 `
 
 const Nav = styled.div`
-  display: flex;
+  display: none;
   color: black;
   gap: 20px;
   font-weight: 600;
   font-size: 1.2rem;
+  @media (min-width: 500px) {
+    display: flex;
+  }
+`
+const NavMobile = styled.div`
+  display: flex;
+  height: 40px;
+  gap: 1.5rem;
+  width: 100%;
+  margin-top: 2rem;
+  justify-content: center;
+  align-items: center;
+  padding: 0 2rem;
+
+  @media (min-width: 500px) {
+    display: none;
+  }
+`
+const AudioButton = styled.div`
+  width: fit-content;
+  margin: none;
+  cursor: pointer;
+  :hover {
+    opacity: 0.7;
+  }
+  img {
+    width: 32px;
+    height: 32px;
+  }
 `
 
 const ImageIcon = styled.img`

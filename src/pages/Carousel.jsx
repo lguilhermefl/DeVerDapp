@@ -6,16 +6,16 @@ import styled from 'styled-components'
 export default function Carousel() {
   const [shape, setShape] = useState('cube')
 
-  const cubeAnimationStyle = 'spin 20s infinite linear'
-  const ringAnimationStyle = 'spin 30s infinite linear'
+  const cubeAnimationStyle = 'spin 15s infinite linear'
+  const ringAnimationStyle = 'spin 20s infinite linear'
   const stylePropsConfig = {
     mobile: {
-      cube: 'translateZ(50px)',
-      ring: 'translateZ(200px)',
-      height: '100px',
-      width: '80px',
-      top: '-7rem',
-      bottom: '10rem',
+      cube: 'translateZ(75px)',
+      ring: 'translateZ(275px)',
+      height: '150px',
+      width: '120px',
+      top: '-6rem',
+      bottom: '13rem',
     },
     tablet: {
       cube: 'translateZ(75px)',
@@ -50,15 +50,15 @@ export default function Carousel() {
 
   const toggleShape = () => {
     if (shape === 'cube') {
-      setShape('ring')
       setAnimation(ringAnimationStyle)
+      setShape('ring')
     } else {
+      setAnimation(ringAnimationStyle)
       setShape('cube')
-      setAnimation(cubeAnimationStyle)
     }
   }
 
-  setTimeout(toggleShape, 10000)
+  setTimeout(toggleShape, 15000)
 
   const mqlTablet = window.matchMedia('(min-width: 768px)')
   const mqlDesktop = window.matchMedia('(min-width: 1024px)')
@@ -135,7 +135,7 @@ const Container = styled.div`
 const Stage = styled.div`
   width: 100%;
   height: 100%;
-  -webkit-transition: -webkit-transform 2s;
+  -webkit-transition: -webkit-transform 4s;
   -webkit-transform-style: preserve-3d;
   .cube > .one {
     opacity: 1;
@@ -294,7 +294,8 @@ const Shape = styled.div`
   width: ${(props) => props.styleProps.width};
   box-shadow: none;
   -webkit-transform-style: preserve-3d;
-  -webkit-animation: ${(props) => props.animation};
+  -webkit-animation: spin 24s infinite linear;
+  animation: spin 24s infinite linear;
 `
 
 const Plane = styled.div`
@@ -308,7 +309,7 @@ const Plane = styled.div`
   -webkit-border-radius: 12px;
   -webkit-box-sizing: border-box;
   background-color: rgba(0, 0, 0, 0.6);
-  -webkit-transition: -webkit-transform 2s, opacity 2s;
+  -webkit-transition: -webkit-transform 5s, opacity 2s;
 `
 
 const NftImage = styled.img`

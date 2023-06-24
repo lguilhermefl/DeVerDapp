@@ -9,11 +9,13 @@ import {
 import { Web3Button } from '@web3modal/react'
 import { useState } from 'react'
 
+import { ABI } from '../config'
+
 const CONFIG = {
   COLLECTION_NAME: 'VINCENT DE VER',
-  CONTRACT: {
-    address: '0x8f6677b3a2843d11937debc2b9eabd3d70dcff4e',
-  },
+  SCAN_LINK:
+    'https://etherscan.io/address/0x37e0de5361b42c85a4c4bcd44b0325abbab37e66#code',
+  CONTRACT_ADDRESS: '0x8f6677b3a2843d11937debc2b9eabd3d70dcff4e',
   MAX_SUPPLY: 1111,
   MAX_PER_WALLET: 3,
   MARKETPLACE: 'Opensea',
@@ -26,6 +28,9 @@ const CONFIG = {
   totalSupply: 4,
 }
 
+const truncate = (input, len) =>
+  input.length > len ? `${input.substring(0, len)}...` : input
+
 export default function Mint() {
   const [mintAmount, setMintAmount] = useState(1)
   const {
@@ -33,18 +38,8 @@ export default function Mint() {
     error: prepareError,
     isError: isPrepareError,
   } = usePrepareContractWrite({
-    address: '0x8f6677b3a2843d11937debc2b9eabd3d70dcff4e',
-    abi: [
-      {
-        inputs: [
-          { internalType: 'uint256', name: '_mintAmount', type: 'uint256' },
-        ],
-        name: 'mint',
-        outputs: [],
-        stateMutability: 'payable',
-        type: 'function',
-      },
-    ],
+    address: CONFIG.CONTRACT_ADDRESS,
+    abi: ABI,
     functionName: 'mint',
     args: [parseInt(mintAmount)],
     value: BigInt(mintAmount * CONFIG.GWEI_COST),
@@ -80,15 +75,26 @@ export default function Mint() {
       <Wrapper>
         {CONFIG.totalSupply} / {CONFIG.MAX_SUPPLY}
       </Wrapper>
+      <LinkWrapper>
+        <StyledLink target={'_blank'} href={CONFIG.SCAN_LINK}>
+          {truncate(CONFIG.CONTRACT_ADDRESS, 15)}
+        </StyledLink>
+      </LinkWrapper>
       {Number(CONFIG.totalSupply) >= CONFIG.MAX_SUPPLY ? (
         <>
           <p style={{ textAlign: 'center' }}>The sale has ended.</p>
           <p style={{ textAlign: 'center', color: 'var(--accent-text)' }}>
             You can still find {CONFIG.COLLECTION_NAME} on
           </p>
-          <a target={'_blank'} href={CONFIG.MARKETPLACE_LINK}>
-            {CONFIG.MARKETPLACE}
-          </a>
+          <LinkWrapper>
+            <StyledLink
+              target={'_blank'}
+              rel="noopener noreferrer"
+              href={CONFIG.MARKETPLACE_LINK}
+            >
+              {CONFIG.MARKETPLACE}
+            </StyledLink>
+          </LinkWrapper>
         </>
       ) : (
         <>
@@ -122,15 +128,23 @@ export default function Mint() {
             {isLoading ? 'Minting...' : 'Mint'}
           </MintButton>
           {isSuccess && (
-            <div>
-              Successfully minted your NFT!
+            <SucessMessage>
               <div>
-                <a href={`https://etherscan.io/tx/${data?.hash}`}>Etherscan</a>
+                Successfully minted your NFT!
+                <div>
+                  <span>Transaction: </span>
+                  <LinkWrapper>
+                    <StyledLink
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href={`https://etherscan.io/tx/${data?.hash}`}
+                    >
+                      Etherscan
+                    </StyledLink>
+                  </LinkWrapper>
+                </div>
               </div>
-            </div>
-          )}
-          {(isPrepareError || isError) && (
-            <div>Error: {(prepareError || error)?.message.split('.')[0]}</div>
+            </SucessMessage>
           )}
         </>
       )}
@@ -191,7 +205,7 @@ const MintButton = styled.button`
   justify-content: center;
   align-items: center;
   height: 40px;
-  width: ${(props) => (props.isDisabled ? '193.75px' : '221.47px')};
+  width: ${(props) => (props.isDisabled ? '10rem' : '12rem')};
   box-sizing: border-box;
   border: 1px solid #808080;
   border-radius: 10px;
@@ -202,4 +216,23 @@ const MintButton = styled.button`
   background-color: ${(props) =>
     props.isDisabled ? 'transparent' : '#000000'};
   cursor: ${(props) => (props.isDisabled ? 'default' : 'pointer')};
+`
+
+const StyledLink = styled.a`
+  color: #808080;
+  font-style: italic;
+  font-size: 0.8rem;
+  line-height: 1.5rem;
+`
+
+const LinkWrapper = styled.div`
+  :hover {
+    color: #ffffff !important;
+  }
+`
+
+const SucessMessage = styled.div`
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 1.5rem;
 `

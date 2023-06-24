@@ -58,11 +58,17 @@ const Wrapper = styled.div`
 
 const Slogan = styled.h2`
   font-weight: 400;
-  font-size: 1rem;
-  margin-top: 0.8rem;
+  font-size: 1.3rem;
+  line-height: 1.8rem;
+  margin-top: 0.7rem;
+  @media (min-width: 500px) {
+    margin-top: 2.5rem;
+    font-size: 1.5rem;
+  }
   @media (min-width: 768px) {
     margin-top: 3.5rem;
-    font-size: 1.8rem;
+    font-size: 2rem;
+    line-height: 2.5rem;
   }
 `
 const CarouselContainer = styled.div`
