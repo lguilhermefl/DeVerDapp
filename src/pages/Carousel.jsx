@@ -11,11 +11,12 @@ export default function Carousel() {
   const stylePropsConfig = {
     mobile: {
       cube: 'translateZ(75px)',
+      cube35911: 'translateZ(60px)',
       ring: 'translateZ(275px)',
       height: '150px',
       width: '120px',
       top: '-6rem',
-      bottom: '13rem',
+      bottom: '11rem',
     },
     tablet: {
       cube: 'translateZ(75px)',
@@ -27,6 +28,7 @@ export default function Carousel() {
     },
     desktop: {
       cube: 'translateZ(100px)',
+      cube35911: 'translateZ(80px)',
       ring: 'translateZ(350px)',
       height: '200px',
       width: '160px',
@@ -154,9 +156,9 @@ const Stage = styled.div`
   .cube > .three {
     opacity: 1;
     -webkit-transform: scale3d(1.2, 1.2, 1.2) rotateY(90deg)
-      ${(props) => props.styleProps.cube};
+      ${(props) => props.styleProps.cube35911};
     transform: scale3d(1.2, 1.2, 1.2) rotateY(90deg)
-      ${(props) => props.styleProps.cube};
+      ${(props) => props.styleProps.cube35911};
   }
 
   .cube > .four {
@@ -170,9 +172,9 @@ const Stage = styled.div`
   .cube > .five {
     opacity: 1;
     -webkit-transform: scale3d(1.2, 1.2, 1.2) rotateY(-90deg)
-      ${(props) => props.styleProps.cube};
+      ${(props) => props.styleProps.cube35911};
     transform: scale3d(1.2, 1.2, 1.2) rotateY(-90deg)
-      ${(props) => props.styleProps.cube};
+      ${(props) => props.styleProps.cube35911};
   }
 
   .cube > .six {
@@ -198,9 +200,9 @@ const Stage = styled.div`
 
   .cube > .nine {
     -webkit-transform: scale3d(0.8, 0.8, 0.8) rotateY(90deg)
-      ${(props) => props.styleProps.cube};
+      ${(props) => props.styleProps.cube35911};
     transform: scale3d(0.8, 0.8, 0.8) rotateY(90deg)
-      ${(props) => props.styleProps.cube};
+      ${(props) => props.styleProps.cube35911};
   }
 
   .cube > .ten {
@@ -212,9 +214,9 @@ const Stage = styled.div`
 
   .cube > .eleven {
     -webkit-transform: scale3d(0.8, 0.8, 0.8) rotateY(-90deg)
-      ${(props) => props.styleProps.cube};
+      ${(props) => props.styleProps.cube35911};
     transform: scale3d(0.8, 0.8, 0.8) rotateY(-90deg)
-      ${(props) => props.styleProps.cube};
+      ${(props) => props.styleProps.cube35911};
   }
 
   .cube > .twelve {
