@@ -52,7 +52,7 @@ export default function App({ Component, pageProps }) {
       ) : null}
 
       <Web3Modal
-        style={{ color: '#FFFFFF !important' }}
+        themeMode="light"
         projectId={projectId}
         ethereumClient={ethereumClient}
         themeVariables={{
