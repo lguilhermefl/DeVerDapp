@@ -4,9 +4,6 @@ import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 export default function Menu() {
-  const [muted, setMuted] = useState(false)
-  const toggleMuted = () => setMuted(!muted)
-
   const url = 'https://dl.sndup.net/jkv6/Always-Pass-It-On.ogg'
 
   const [audio] = useState(new Audio(url))

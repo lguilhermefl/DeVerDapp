@@ -1,3 +1,21 @@
+export const CONFIG = {
+  COLLECTION_NAME: 'Vincent de ver',
+  SCAN_LINK:
+    'https://etherscan.io/address/0x37e0de5361b42c85a4c4bcd44b0325abbab37e66#code',
+  CONTRACT_ADDRESS: '0x8f6677B3A2843D11937deBC2b9eAbd3d70DcFf4e',
+  MARKETPLACE: 'Opensea',
+  MARKETPLACE_LINK: 'https://opensea.io/collection/radialartcollection',
+  NETWORK: {
+    SYMBOL: 'ETH',
+  },
+  CHAIN_SMALLEST_UNIT_FACTOR: parseFloat(10 ** -18),
+  DISPLAY_COST: 0.01,
+  GWEI_COST: '10000000000000000',
+  MAX_SUPPLY: 1111,
+  MAX_PER_WALLET: 3,
+  TOTAL_SUPPLY: 4,
+}
+
 export const ABI = [
   {
     inputs: [

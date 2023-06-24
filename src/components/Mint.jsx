@@ -5,11 +5,12 @@ import {
   usePrepareContractWrite,
   useContractWrite,
   useWaitForTransaction,
+  useContractReads,
 } from 'wagmi'
 import { Web3Button } from '@web3modal/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import { ABI } from '../config'
+import { ABI, CONFIG } from '../config'
 
 import localFont from 'next/font/local'
 
@@ -23,33 +24,55 @@ const hashira = localFont({
   ],
 })
 
-const CONFIG = {
-  COLLECTION_NAME: 'Vincent de ver',
-  SCAN_LINK:
-    'https://etherscan.io/address/0x37e0de5361b42c85a4c4bcd44b0325abbab37e66#code',
-  CONTRACT_ADDRESS: '0x8f6677b3a2843d11937debc2b9eabd3d70dcff4e',
-  MAX_SUPPLY: 1111,
-  MAX_PER_WALLET: 3,
-  MARKETPLACE: 'Opensea',
-  MARKETPLACE_LINK: 'https://opensea.io/collection/radialartcollection',
-  DISPLAY_COST: 0.01,
-  GWEI_COST: '10000000000000000',
-  NETWORK: {
-    SYMBOL: 'ETH',
-  },
-  totalSupply: 4,
-}
-
-const truncate = (input, len) =>
-  input.length > len ? `${input.substring(0, len)}...` : input
-
 export default function Mint() {
   const [mintAmount, setMintAmount] = useState(1)
-  const {
-    config,
-    error: prepareError,
-    isError: isPrepareError,
-  } = usePrepareContractWrite({
+  const [contractInfo, setContractInfo] = useState({
+    maxSupply: CONFIG.MAX_SUPPLY,
+    totalSupply: CONFIG.TOTAL_SUPPLY,
+    maxPerWallet: CONFIG.MAX_PER_WALLET,
+    displayCost: CONFIG.DISPLAY_COST,
+    gweiCost: CONFIG.GWEI_COST,
+  })
+
+  const contract = {
+    address: CONFIG.CONTRACT_ADDRESS,
+    abi: ABI,
+  }
+
+  const { data: contractData } = useContractReads({
+    contracts: [
+      {
+        ...contract,
+        functionName: 'maxSupply',
+      },
+      {
+        ...contract,
+        functionName: 'totalSupply',
+      },
+      {
+        ...contract,
+        functionName: 'maxMintAmount',
+      },
+      {
+        ...contract,
+        functionName: 'cost',
+      },
+    ],
+    watch: true,
+    onSuccess(data) {
+      setContractInfo({
+        maxSupply: Number(data[0].result),
+        totalSupply: Number(data[1].result),
+        maxPerWallet: Number(data[2].result),
+        displayCost: Number(data[3].result) * CONFIG.CHAIN_SMALLEST_UNIT_FACTOR,
+        gweiCost: BigInt(data[3].result).toString(),
+      })
+    },
+  })
+
+  useEffect(() => {}, [contractData])
+
+  const { config } = usePrepareContractWrite({
     address: CONFIG.CONTRACT_ADDRESS,
     abi: ABI,
     functionName: 'mint',
@@ -57,7 +80,7 @@ export default function Mint() {
     value: BigInt(mintAmount * CONFIG.GWEI_COST),
   })
 
-  const { data, error, isError, write } = useContractWrite(config)
+  const { data, write } = useContractWrite(config)
 
   const { isLoading, isSuccess } = useWaitForTransaction({
     hash: data?.hash,
@@ -75,11 +98,14 @@ export default function Mint() {
 
   const incrementMintAmount = () => {
     let newMintAmount = mintAmount + 1
-    if (newMintAmount > CONFIG.MAX_PER_WALLET) {
-      newMintAmount = CONFIG.MAX_PER_WALLET
+    if (newMintAmount > contractInfo.maxPerWallet) {
+      newMintAmount = contractInfo.maxPerWallet
     }
     setMintAmount(newMintAmount)
   }
+
+  const truncate = (input, len) =>
+    input.length > len ? `${input.substring(0, len)}...` : input
 
   return (
     <Container>
@@ -87,14 +113,14 @@ export default function Mint() {
         {CONFIG.COLLECTION_NAME}
       </CollectionTitle>
       <WrapperTotalMint>
-        {CONFIG.totalSupply} / {CONFIG.MAX_SUPPLY}
+        {contractInfo.totalSupply} / {contractInfo.maxSupply}
       </WrapperTotalMint>
       <LinkWrapper>
         <StyledLink target={'_blank'} href={CONFIG.SCAN_LINK}>
           {truncate(CONFIG.CONTRACT_ADDRESS, 15)}
         </StyledLink>
       </LinkWrapper>
-      {Number(CONFIG.totalSupply) >= CONFIG.MAX_SUPPLY ? (
+      {Number(contractInfo.totalSupply) >= contractInfo.maxSupply ? (
         <>
           <p style={{ textAlign: 'center' }}>The sale has ended.</p>
           <p style={{ textAlign: 'center' }}>
@@ -113,7 +139,7 @@ export default function Mint() {
       ) : (
         <>
           <span style={{ textAlign: 'center' }}>
-            1 NFT costs {CONFIG.DISPLAY_COST} {CONFIG.NETWORK.SYMBOL}
+            1 NFT costs {contractInfo.displayCost} {CONFIG.NETWORK.SYMBOL}
           </span>
           <span style={{ textAlign: 'center', 'font-size': '0.7rem' }}>
             Excluding gas fees
@@ -147,7 +173,7 @@ export default function Mint() {
             <SucessMessage>
               <div>
                 Successfully minted your NFT!
-                <div>
+                <SuccessWrapper>
                   <span>Transaction: </span>
                   <LinkWrapper>
                     <StyledLink
@@ -158,7 +184,7 @@ export default function Mint() {
                       Etherscan
                     </StyledLink>
                   </LinkWrapper>
-                </div>
+                </SuccessWrapper>
               </div>
             </SucessMessage>
           )}
@@ -189,7 +215,7 @@ const Container = styled.div`
   }
 `
 const CollectionTitle = styled.div`
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: 500;
   margin: 10px 0 0;
 `
@@ -204,10 +230,10 @@ const Wrapper = styled.div`
 const WrapperTotalMint = styled.div`
   display: flex;
   align-items: center;
-  margin: 10px 0 5px;
+  margin: 5px 0 5px;
   gap: 15px;
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1.4rem;
+  font-weight: 500;
 `
 
 const MintAmount = styled.span`
@@ -267,4 +293,9 @@ const SucessMessage = styled.div`
   text-align: center;
   font-size: 0.8rem;
   line-height: 1.5rem;
+`
+const SuccessWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 4px;
 `
