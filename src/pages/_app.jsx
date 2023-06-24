@@ -3,6 +3,8 @@ import { Web3Modal } from '@web3modal/react'
 import { useEffect, useState } from 'react'
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
 import { goerli } from 'wagmi/chains'
+import Head from 'next/head'
+
 import './styles.css'
 import './carousel.css'
 
@@ -35,6 +37,14 @@ export default function App({ Component, pageProps }) {
 
   return (
     <>
+      <Head>
+        <title>Vincent de ver | A New World</title>
+        <meta
+          name="description"
+          content="Redefine what you think and what you see."
+        />
+        <link rel="shortcut icon" href="./favicon.ico" />
+      </Head>
       {ready ? (
         <WagmiConfig config={wagmiConfig}>
           <Component {...pageProps} />
