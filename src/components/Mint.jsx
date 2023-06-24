@@ -86,7 +86,8 @@ export default function Mint() {
     hash: data?.hash,
   })
 
-  const isDisabled = !write || isLoading
+  const isDisabled = false
+  // !write || isLoading
 
   const decrementMintAmount = () => {
     let newMintAmount = mintAmount - 1
