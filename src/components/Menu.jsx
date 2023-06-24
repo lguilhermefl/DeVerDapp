@@ -21,6 +21,10 @@ export default function Menu() {
   useEffect(() => {
     audio.addEventListener('ended', () => setPlaying(false))
     setTimeout(() => setPlaying(true), 4000)
+    setInterval(() => {
+      audio.load()
+      audio.play()
+    }, 198000)
     return () => {
       audio.removeEventListener('ended', () => setPlaying(false))
     }

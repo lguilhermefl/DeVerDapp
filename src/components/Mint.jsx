@@ -11,8 +11,20 @@ import { useState } from 'react'
 
 import { ABI } from '../config'
 
+import localFont from 'next/font/local'
+
+const hashira = localFont({
+  src: [
+    {
+      path: '../pages/fonts/HashiraMt-Regular.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+  ],
+})
+
 const CONFIG = {
-  COLLECTION_NAME: 'VINCENT DE VER',
+  COLLECTION_NAME: 'Vincent de ver',
   SCAN_LINK:
     'https://etherscan.io/address/0x37e0de5361b42c85a4c4bcd44b0325abbab37e66#code',
   CONTRACT_ADDRESS: '0x8f6677b3a2843d11937debc2b9eabd3d70dcff4e',
@@ -71,10 +83,12 @@ export default function Mint() {
 
   return (
     <Container>
-      <span>{CONFIG.COLLECTION_NAME}</span>
-      <Wrapper>
+      <CollectionTitle className={hashira.className}>
+        {CONFIG.COLLECTION_NAME}
+      </CollectionTitle>
+      <WrapperTotalMint>
         {CONFIG.totalSupply} / {CONFIG.MAX_SUPPLY}
-      </Wrapper>
+      </WrapperTotalMint>
       <LinkWrapper>
         <StyledLink target={'_blank'} href={CONFIG.SCAN_LINK}>
           {truncate(CONFIG.CONTRACT_ADDRESS, 15)}
@@ -83,7 +97,7 @@ export default function Mint() {
       {Number(CONFIG.totalSupply) >= CONFIG.MAX_SUPPLY ? (
         <>
           <p style={{ textAlign: 'center' }}>The sale has ended.</p>
-          <p style={{ textAlign: 'center', color: 'var(--accent-text)' }}>
+          <p style={{ textAlign: 'center' }}>
             You can still find {CONFIG.COLLECTION_NAME} on
           </p>
           <LinkWrapper>
@@ -101,7 +115,9 @@ export default function Mint() {
           <span style={{ textAlign: 'center' }}>
             1 NFT costs {CONFIG.DISPLAY_COST} {CONFIG.NETWORK.SYMBOL}
           </span>
-          <span style={{ textAlign: 'center' }}>Excluding gas fees</span>
+          <span style={{ textAlign: 'center', 'font-size': '0.7rem' }}>
+            Excluding gas fees
+          </span>
 
           <Wrapper>
             <RoundButtonQuantity
@@ -155,7 +171,7 @@ export default function Mint() {
 
 const Container = styled.div`
   @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-  padding: 1rem;
+  padding: 1rem 1rem 1.25rem;
   box-sizing: border-box;
   width: 300px;
   border-radius: 12px;
@@ -172,10 +188,26 @@ const Container = styled.div`
     width: 400px;
   }
 `
+const CollectionTitle = styled.div`
+  font-size: 1.8rem;
+  font-weight: 500;
+  margin: 10px 0 0;
+`
+
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
+  margin: 10px 0;
   gap: 15px;
+`
+
+const WrapperTotalMint = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 10px 0 5px;
+  gap: 15px;
+  font-size: 1.5rem;
+  font-weight: 600;
 `
 
 const MintAmount = styled.span`
