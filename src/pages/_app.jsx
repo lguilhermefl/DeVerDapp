@@ -59,7 +59,6 @@ export default function App({ Component, pageProps }) {
           '--w3m-accent-color': '#000000',
           '--w3m-background-color': '#000000',
           '--w3m-accent-fill-color': '#FFFFFF',
-          '--w3m-background-color': '#FFFFFF',
         }}
       />
     </>
