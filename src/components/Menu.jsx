@@ -5,25 +5,36 @@ import styled from 'styled-components'
 
 export default function Menu() {
   const url = 'https://dl.sndup.net/jkv6/Always-Pass-It-On.ogg'
-
-  const [audio] = useState(new Audio(url))
+  // const [audio] = useState(new Audio(url))
   const [playing, setPlaying] = useState(false)
 
-  const toggle = () => setPlaying(!playing)
+  const toggle = () => {
+    const audio = document.getElementsByClassName('song')[0]
+    setPlaying(!playing)
+    if (playing) return audio.pause()
+    return audio.play()
+  }
 
   useEffect(() => {
-    playing ? audio.play() : audio.pause()
-  }, [playing])
+    const audio = document.getElementsByClassName('song')[0]
+    audio.addEventListener('canplay', () => {
+      const tryToPlay = () => {
+        const promise = audio.play()
+        if (promise !== undefined) {
+          promise
+            .then(() => {
+              setPlaying(true)
+            })
+            .catch(() => {
+              setTimeout(() => tryToPlay(), 1000)
+            })
+        }
+      }
+      tryToPlay()
+    })
 
-  useEffect(() => {
-    audio.addEventListener('ended', () => setPlaying(false))
-    setTimeout(() => setPlaying(true), 4000)
-    setInterval(() => {
-      audio.load()
-      audio.play()
-    }, 198000)
     return () => {
-      audio.removeEventListener('ended', () => setPlaying(false))
+      audio.removeEventListener('canplay', () => {})
     }
   }, [])
 
@@ -32,6 +43,16 @@ export default function Menu() {
       <Header>
         <Logo src="./new_logo.png" />
         <Nav>
+          <audio loop className="song">
+            <source
+              src="https://dl.sndup.net/jkv6/Always-Pass-It-On.ogg"
+              type="audio/ogg"
+            />
+            <source
+              src="https://dl.sndup.net/nfsb/Always-Pass-It-On.mp3"
+              type="audio/mpeg"
+            />
+          </audio>
           <AudioButton onClick={toggle}>
             {playing ? (
               <img alt="pause" src="./pause.png" />

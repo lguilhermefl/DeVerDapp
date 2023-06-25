@@ -141,7 +141,7 @@ export default function Mint() {
           <span style={{ textAlign: 'center' }}>
             1 NFT costs {contractInfo.displayCost} {CONFIG.NETWORK.SYMBOL}
           </span>
-          <span style={{ textAlign: 'center', 'font-size': '0.7rem' }}>
+          <span style={{ textAlign: 'center', fontSize: '0.7rem' }}>
             Excluding gas fees
           </span>
 
