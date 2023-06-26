@@ -4,8 +4,6 @@ import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 export default function Menu() {
-  const url = 'https://dl.sndup.net/jkv6/Always-Pass-It-On.ogg'
-  // const [audio] = useState(new Audio(url))
   const [playing, setPlaying] = useState(false)
 
   const toggle = () => {
@@ -17,25 +15,14 @@ export default function Menu() {
 
   useEffect(() => {
     const audio = document.getElementsByClassName('song')[0]
-    audio.addEventListener('canplay', () => {
-      const tryToPlay = () => {
-        const promise = audio.play()
-        if (promise !== undefined) {
-          promise
-            .then(() => {
-              setPlaying(true)
-            })
-            .catch(() => {
-              setTimeout(() => tryToPlay(), 1000)
-            })
-        }
-      }
-      tryToPlay()
-    })
-
-    return () => {
-      audio.removeEventListener('canplay', () => {})
+    const body = document.body
+    const handleEvent = () => {
+      audio.play()
+      setPlaying(true)
+      body.removeEventListener('click', handleEvent, false)
     }
+    
+    body.addEventListener('click', handleEvent, false)
   }, [])
 
   return (

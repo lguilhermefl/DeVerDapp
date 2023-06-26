@@ -3,6 +3,7 @@
 import Carousel from './Carousel'
 import Menu from '../components/Menu'
 import Mint from '../components/Mint'
+import Faq from '../components/Faq'
 
 import localFont from 'next/font/local'
 import styled from 'styled-components'
@@ -21,9 +22,9 @@ export default function HomePage() {
   return (
     <>
       <Menu />
-      <Main>
+      <Main className={hashira.className}>
         <Wrapper>
-          <Slogan className={hashira.className}>
+          <Slogan>
             The Vincent de Ver NFT Collection Redefines Artistic Experiences
             Through Abstract Fusion
           </Slogan>
@@ -33,6 +34,7 @@ export default function HomePage() {
           <Carousel />
         </CarouselContainer>
         <Mint />
+        <Faq />
       </Main>
     </>
   )
@@ -58,12 +60,13 @@ const Wrapper = styled.div`
 
 const Slogan = styled.h2`
   font-weight: 400;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   line-height: 1.8rem;
   margin-top: 0.7rem;
   @media (min-width: 500px) {
     margin-top: 2.5rem;
-    font-size: 1.5rem;
+    font-size: 1.7rem;
+    line-height: 2rem;
   }
   @media (min-width: 768px) {
     margin-top: 3.5rem;
