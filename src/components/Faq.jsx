@@ -42,6 +42,9 @@ const Container = styled.div`
 `
 
 const Topic = styled.div`
+    @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Ubuntu, 'Helvetica Neue', sans-serif;
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -63,7 +66,7 @@ const Title = styled.h2`
 `
 
 const Description = styled.span`
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     line-height: 1.2;
     font-weight: 300;
     margin-bottom: 1rem;
