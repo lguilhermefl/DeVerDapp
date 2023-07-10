@@ -64,7 +64,7 @@ export default function Mint() {
         maxSupply: Number(data[0].result),
         totalSupply: Number(data[1].result),
         maxPerWallet: Number(data[2].result),
-        displayCost: Number(data[3].result) * CONFIG.CHAIN_SMALLEST_UNIT_FACTOR,
+        displayCost: (Number(data[3].result) * CONFIG.CHAIN_SMALLEST_UNIT_FACTOR).toFixed(4),
         gweiCost: BigInt(data[3].result).toString(),
       })
     },
