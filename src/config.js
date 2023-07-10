@@ -4,7 +4,7 @@ export const CONFIG = {
     "https://etherscan.io/address/0x8f6677b3a2843d11937debc2b9eabd3d70dcff4e#code",
   CONTRACT_ADDRESS: "0x8f6677b3a2843d11937debc2b9eabd3d70dcff4e",
   MARKETPLACE: "Opensea",
-  MARKETPLACE_LINK: "https://opensea.io/collection/radialartcollection",
+  MARKETPLACE_LINK: "https://opensea.io/collection/vincentdever",
   TWITTER_URL: "https://twitter.com/Vdv_blvckvault",
   NETWORK: {
     SYMBOL: "ETH",
