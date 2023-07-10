@@ -163,7 +163,7 @@ export default function Mint() {
             </RoundButtonQuantity>
           </Wrapper>
           <MintButton
-            disabled={isDisabled || isLoading}
+            disabled={isDisabled || !write}
             isDisabled={isDisabled}
             onClick={() => write()}
           >
