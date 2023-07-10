@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { CONFIG } from '../config'
 
 export default function Menu() {
   const [playing, setPlaying] = useState(false)
@@ -49,7 +50,7 @@ export default function Menu() {
           </AudioButton>
 
           <SocialAnchor
-            href="https://opensea.io/collection/radialartcollection"
+            href={CONFIG.MARKETPLACE_LINK}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -57,7 +58,7 @@ export default function Menu() {
           </SocialAnchor>
 
           <SocialAnchor
-            href="https://etherscan.io/address/0x37e0de5361b42c85a4c4bcd44b0325abbab37e66#writeContract"
+            href={CONFIG.SCAN_LINK}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -65,7 +66,7 @@ export default function Menu() {
           </SocialAnchor>
 
           <SocialAnchor
-            href="https://twitter.com/VincentDeVerNFT"
+            href={CONFIG.TWITTER_URL}
             target="_blank"
             rel="noopener noreferrer"
           >

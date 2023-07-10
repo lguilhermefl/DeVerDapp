@@ -12,11 +12,7 @@ export default function Faq() {
         },
         {
             title: 'Mint Info',
-            description: 'Mint price is 0.01 eth'
-        },
-        {
-            title: 'Mint date',
-            description: 'TBA'
+            description: 'Mint price is 0.0075 eth and max of 5 pieces per wallet'
         },
     ]
 

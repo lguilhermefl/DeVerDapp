@@ -1,18 +1,19 @@
 export const CONFIG = {
   COLLECTION_NAME: "Vincent de ver",
   SCAN_LINK:
-    "https://etherscan.io/address/0x37e0de5361b42c85a4c4bcd44b0325abbab37e66#code",
-  CONTRACT_ADDRESS: "0x8f6677B3A2843D11937deBC2b9eAbd3d70DcFf4e",
+    "https://etherscan.io/address/0x8f6677b3a2843d11937debc2b9eabd3d70dcff4e#code",
+  CONTRACT_ADDRESS: "0x8f6677b3a2843d11937debc2b9eabd3d70dcff4e",
   MARKETPLACE: "Opensea",
   MARKETPLACE_LINK: "https://opensea.io/collection/radialartcollection",
+  TWITTER_URL: "https://twitter.com/Vdv_blvckvault",
   NETWORK: {
     SYMBOL: "ETH",
   },
   CHAIN_SMALLEST_UNIT_FACTOR: parseFloat(10 ** -18),
-  DISPLAY_COST: 0.01,
-  GWEI_COST: "10000000000000000",
+  DISPLAY_COST: 0.0075,
+  GWEI_COST: "7500000000000000",
   MAX_SUPPLY: 1111,
-  MAX_PER_WALLET: 3,
+  MAX_PER_WALLET: 5,
   TOTAL_SUPPLY: 0,
 };
 
