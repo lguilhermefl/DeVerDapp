@@ -164,7 +164,7 @@ export default function Mint() {
           </Wrapper>
           <MintButton
             disabled={!write || isDisabled}
-            isDisabled={isDisabled}
+            isDisabled={!write || isDisabled}
             onClick={() => write()}
           >
             {isLoading ? 'Minting...' : 'Mint'}
